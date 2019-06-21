@@ -37,5 +37,8 @@
     <ClInclude Include="Main.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="Student.h">
+      <Filter>线性表的顺序存储结构</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

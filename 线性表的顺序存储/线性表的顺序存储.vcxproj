@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="Main.h" />
     <ClInclude Include="Service.h" />
+    <ClInclude Include="Student.h" />
     <ClInclude Include="顺序表.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

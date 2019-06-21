@@ -49,7 +49,8 @@ void LoadSqList(SQLIST& sqList, const char* filePath)
 void ListInit(SQLIST& sqList)
 {
 	//为顺序表中的结构体数组申请内存空间
-	sqList.elements = (STUDENT*)malloc(SIZE_SQLIST * sizeof(STUDENT));
+	//sqList.elements = (STUDENT*)malloc(SIZE_SQLIST * sizeof(STUDENT));
+
 	//把结构体数组清零，方便对结构体进行比较(memcmp)
 	memset(sqList.elements, 0x0, sizeof(SIZE_SQLIST * sizeof(STUDENT)));
 

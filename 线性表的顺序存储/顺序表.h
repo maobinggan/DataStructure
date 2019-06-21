@@ -1,11 +1,6 @@
 #pragma once
 #include "Main.h"
-//定义结构体
-struct STUDENT
-{
-	int sCode;		//学号
-	char name[20];		//姓名
-};
+
 
 /*
 * 定义顺序表：线性表的顺序存储结构
@@ -14,7 +9,7 @@ struct STUDENT
 #define SIZE_SQLIST 100	//线性表中数组的最大长度
 struct SQLIST
 {
-	STUDENT* elements;	//实际上是数组：STUDENT elements[SIZE_SQLIST]，但因为结构体声明位于其他头文件，所以只能使用指针。
+	STUDENT elements[SIZE_SQLIST];	//实际上是数组：STUDENT elements[SIZE_SQLIST]，但因为结构体声明位于其他头文件，所以只能使用指针。
 	int length;
 };
 //顺序表的基本操作
