@@ -37,7 +37,7 @@ bool ListGetNodeByPos(NODE* headNode, int pos, NODE*& node)
 		tempNode = tempNode->next;
 		count++;
 	}
-	node = tempNode->next;
+	node = tempNode;
 	return true;
 }
 
