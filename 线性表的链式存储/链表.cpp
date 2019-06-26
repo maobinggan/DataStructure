@@ -108,7 +108,7 @@ bool ListDeleteByPos(NODE*& headNode, int pos)
 void SaveData(NODE* headNode)
 {
 	//打开文件
-	FILE* pFile = fopen("stu.txt", "w"); //打开用于写入的空文件。 如果给定文件存在，则其内容会被销毁。
+	FILE* pFile = fopen("stu.txt", "wb"); //打开用于写入的空文件。 如果给定文件存在，则其内容会被销毁。
 	if (pFile == NULL) { printf("【error】pFile is null...\n"); return; }
 
 	//写入学生信息至文件
@@ -134,7 +134,7 @@ void SaveData(NODE* headNode)
 void LoadData(NODE* headNode)
 {
 	//打开文件
-	FILE* pFile = fopen("stu.txt", "r"); //打开以便读取。 如果文件不存在或无法找到fopen调用失败。
+	FILE* pFile = fopen("stu.txt", "rb"); //打开以便读取。 如果文件不存在或无法找到fopen调用失败。
 	if (pFile == NULL) { return; }		//如果文件不存在，说明本系统没有任何学生记录
 
 	//读取
@@ -163,7 +163,7 @@ void LoadData(NODE* headNode)
 bool ListLocateBySCode(NODE* headNode, int sCode, int& pos)
 {
 	NODE* tempNode = headNode;
-	pos = 1;//逻辑位置从1开始，表示第一个节点（即头节点）
+	pos = 2;//逻辑位置从2开始，表示第二个节点（即头节点的下一节点，因为头节点不存数据）
 	while (tempNode->next != NULL)
 	{
 		if (tempNode->next->data.sCode == sCode)
