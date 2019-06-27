@@ -26,8 +26,7 @@ void ListInit(NODE*& headNode)
 bool ListGetNodeByPos(NODE* headNode, int pos, NODE*& node)
 {
 	//判断逻辑位置是否越界
-	if (pos < 1) { return false; }
-	if (pos > ListGetLength(headNode)) { return false; }
+	if (pos < 1 || pos > ListGetLength(headNode)) { printf("【error】逻辑位置越界\n"); return false; }
 
 	//获取该位置的节点
 	NODE* tempNode = headNode;
@@ -49,7 +48,7 @@ bool ListGetNodeByPos(NODE* headNode, int pos, NODE*& node)
 * 参    数: NODE * & newNode -
 * 返 回 值: void
 */
-void ListAppend(NODE*& headNode, NODE*& newNode)
+void ListAppend(NODE* headNode, NODE* newNode)
 {
 	NODE* tempNode = headNode;
 	while (tempNode->next != NULL)
@@ -82,13 +81,14 @@ int ListGetLength(NODE* headNode)
 * 函 数 名: ListDeleteByPos
 * 说    明：根据逻辑位置序号删除节点
 * 参    数: NODE * & headNode -
-* 参    数: int pos - 逻辑位置（从1开始）
+* 参    数: int pos - 逻辑位置（从1开始，1是头节点，不允许通过此函数删除头节点）
 * 返 回 值: bool
 */
-bool ListDeleteByPos(NODE*& headNode, int pos)
+bool ListDeleteByPos(NODE* headNode, int pos)
 {
 	//判断逻辑位置是否越界
-	if (pos > ListGetLength(headNode)) { return false; }
+	if (pos > ListGetLength(headNode)) { printf("【error】逻辑位置越界 \n"); return false; }
+	if (pos < 2) { printf("【error】头节点不允许删除 \n"); return false; }
 
 	//查找指定逻辑位置的前驱节点
 	NODE* preNode;
@@ -163,7 +163,7 @@ void LoadData(NODE* headNode)
 bool ListLocateBySCode(NODE* headNode, int sCode, int& pos)
 {
 	NODE* tempNode = headNode;
-	pos = 2;//逻辑位置从2开始，表示第二个节点（即头节点的下一节点，因为头节点不存数据）
+	pos = 2;//逻辑位置从2开始查找学号（即头节点的下一节点，因为头节点不存数据）
 	while (tempNode->next != NULL)
 	{
 		if (tempNode->next->data.sCode == sCode)
