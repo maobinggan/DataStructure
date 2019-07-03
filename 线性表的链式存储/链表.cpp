@@ -48,8 +48,16 @@ bool ListGetNodeByPos(NODE* headNode, int pos, NODE*& node)
 * 参    数: NODE * & newNode -
 * 返 回 值: void
 */
-void ListAppend(NODE* headNode, NODE* newNode)
+void ListAppend(NODE* headNode, STUDENT newData)
 {
+	//初始化一个新节点
+	NODE* newNode;
+	ListInit(newNode);
+
+	//赋值
+	newNode->data = newData;
+
+	//插入到链表末尾
 	NODE* tempNode = headNode;
 	while (tempNode->next != NULL)
 	{
@@ -101,7 +109,7 @@ bool ListDeleteByPos(NODE* headNode, int pos)
 
 /**
 * 函 数 名: SaveData
-* 说    明：将链表保存至文件
+* 说    明：将链表写入文件
 * 参    数: NODE * headNode -
 * 返 回 值: void
 */
@@ -111,7 +119,7 @@ void SaveData(NODE* headNode)
 	FILE* pFile = fopen("stu.txt", "wb"); //打开用于写入的空文件。 如果给定文件存在，则其内容会被销毁。
 	if (pFile == NULL) { printf("【error】pFile is null...\n"); return; }
 
-	//写入学生信息至文件
+	//写入文件
 	NODE* tempNode = headNode->next;
 	while (tempNode != NULL)
 	{
@@ -134,16 +142,14 @@ void SaveData(NODE* headNode)
 void LoadData(NODE* headNode)
 {
 	//打开文件
-	FILE* pFile = fopen("stu.txt", "rb"); //打开以便读取。 如果文件不存在或无法找到fopen调用失败。
-	if (pFile == NULL) { return; }		//如果文件不存在，说明本系统没有任何学生记录
+	FILE* pFile = fopen("stu.txt", "rb");	//打开以便读取。 如果文件不存在或无法找到fopen调用失败。
+	if (pFile == NULL) { return; }			//如果文件不存在，说明没有任何记录
 
-	//读取
-	NODE* newNode;
-	ListInit(newNode);
-	while (fread(&newNode->data, sizeof(STUDENT), 1., pFile) != 0)
+	//读取文件
+	STUDENT newData;
+	while (fread(&newData, sizeof(STUDENT), 1, pFile) != 0)
 	{
-		ListAppend(headNode, newNode);
-		ListInit(newNode);
+		ListAppend(headNode, newData);
 	}
 
 	//关闭文件
@@ -153,37 +159,37 @@ void LoadData(NODE* headNode)
 }
 
 /**
-* 函 数 名: ListLocateBySCode
-* 说    明：查找节点的逻辑位置（通过学号）
+* 函 数 名: ListLocateByCode
+* 说    明：查找节点的逻辑位置（通过编号）
 * 参    数: NODE * headNode -
 * 参    数: int studentNumber -
 * 参    数: int & pos - 返回逻辑位置（OUT）
 * 返 回 值: bool
 */
-bool ListLocateBySCode(NODE* headNode, int sCode, int& pos)
+bool ListLocateByCode(NODE* headNode, int code, int& pos)
 {
 	NODE* tempNode = headNode;
-	pos = 2;//逻辑位置从2开始查找学号（即头节点的下一节点，因为头节点不存数据）
+	pos = 2;//逻辑位置从2开始查找编号（即头节点的下一节点，因为头节点不存数据）
 	while (tempNode->next != NULL)
 	{
-		if (tempNode->next->data.sCode == sCode)
+		if (tempNode->next->data.code == code)
 		{
 			return true;
 		}
 		tempNode = tempNode->next;
 		pos++;
 	}
-	pos = 0;//查不到该学号，置零
+	pos = 0;//查不到，置零
 	return false;
 }
 
 /**
-* 函 数 名: ListOrderBySCode
-* 说    明：链表排序：按学号升序（冒泡排序）
+* 函 数 名: ListOrderByCode
+* 说    明：链表排序：按编号升序（冒泡排序）
 * 参    数: NODE * headNode -
 * 返 回 值: void
 */
-void ListOrderBySCode(NODE* headNode)
+void ListOrderByCode(NODE* headNode)
 {
 	//获取链表总长度
 	int length = ListGetLength(headNode);
@@ -199,7 +205,7 @@ void ListOrderBySCode(NODE* headNode)
 		NODE* tempNode_j = tempNode_i;
 		for (j = 0; j < length - 1 - i; j++)
 		{
-			if (tempNode_j->data.sCode > tempNode_j->next->data.sCode)
+			if (tempNode_j->data.code > tempNode_j->next->data.code)
 			{
 				//交换：仅交换节点数据域即可，指针域不变
 				STUDENT tempData = tempNode_j->data;
